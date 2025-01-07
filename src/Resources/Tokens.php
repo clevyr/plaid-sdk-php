@@ -27,6 +27,7 @@ class Tokens extends AbstractResource
 	 * @param array|null $auth
 	 * @param array|null $optional_products
 	 * @param int|null $days_requested
+	 * @param array|null $update
 	 * @throws PlaidRequestException
 	 * @return object
 	 */
@@ -46,7 +47,8 @@ class Tokens extends AbstractResource
 		?string $institution_id = null,
 		?array $auth = null,
 		?array $optional_products = [],
-		?int $days_requested = null): object {
+		?int $days_requested = null,
+		?array $update = []): object {
 
 		$params = [
 			"client_name" => $client_name,
@@ -100,6 +102,10 @@ class Tokens extends AbstractResource
 
 		if ($days_requested) {
 			$params["transactions"]["days_requested"] = $days_requested;
+		}
+
+		if ($update) {
+			$params["update"] = $update;
 		}
 
 		return $this->sendRequest(
